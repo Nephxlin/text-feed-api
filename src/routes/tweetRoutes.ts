@@ -25,15 +25,36 @@ router.post('/', async (req, res) => {
 })
 
 // list tweet
-router.get('/', (req, res) => {
-  const allTweets = prisma.tweet.findMany()
+router.get('/', async(req, res) => {
+  const allTweets = await  prisma.tweet.findMany({
+    include:{user:{
+      select:{
+        id:true,
+        name:true,
+        username:true,
+        image:true
+      }
+    }}
+    // select:{
+  //   id:true,
+  //   content:true,
+  //   user:{
+  //     select:{
+  //       id:true,
+  //       name:true,
+  //       username:true,
+  //       image:true
+  //     }
+  //   }
+  // }
+  })
   res.json(allTweets)
 })
 
 // get one tweet
 router.get('/:id', (req, res) => {
   const {id} =req.params
-  const tweet = prisma.tweet.findUnique({where:{id:Number(id)}})  
+  const tweet = prisma.tweet.findUnique({where:{id:Number(id)}, include:{user:true}})  
 
   if(!tweet) return res.status(404).json({message: "Tweet not found"}) 
   res.json(tweet)
