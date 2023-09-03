@@ -1,5 +1,6 @@
-import { Router } from "express";
+import e, { Router } from "express";
 import { PrismaClient } from "@prisma/client";
+import { sendEmailToken } from "../services/emailService";
 import jwt from "jsonwebtoken"
 
 const EMAIL_TOKEN_EXPIRATION_MINUTES = 10
@@ -45,6 +46,7 @@ router.post('/login', async (req, res) => {
       }
     })
     console.log(createdToken)
+    await sendEmailToken(email,emailToken)
     res.sendStatus(201)
   } catch(error){
     res.sendStatus(400).json({message: "Could't start authentication process"})
