@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 
 const router = Router()
 const prisma = new PrismaClient()
-const JWT_SECRET =  "SECRET"
+const JWT_SECRET =  process.env.JWT_SECRET || "NON LOCK SECRET"
 // tweet CRUD
 
 //create tweet
