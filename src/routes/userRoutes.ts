@@ -8,7 +8,7 @@ const prisma = new PrismaClient()
 
 //create user
 router.post('/', async (req, res) => { 
-  const {email,name,username} =req.body
+  const {email,name,username,password} =req.body
 
   try {
     const result = await prisma.user.create({
@@ -16,6 +16,7 @@ router.post('/', async (req, res) => {
         email,
         name,
         username,
+        password,
         bio: 'hello, its my new account'
       }
     })
