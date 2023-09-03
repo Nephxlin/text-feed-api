@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
         email,
         name,
         username,
-        password,
         bio: 'hello, its my new account'
       }
     })

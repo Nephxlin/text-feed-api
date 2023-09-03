@@ -14,14 +14,14 @@ model User {
   id         Int      @id @default(autoincrement())
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  name       String
-  username   String   @unique
+  name       String?
+  username   String?  @unique
   email      String   @unique
   image      String?
   bio        String?
-  password   String
   isVerified Boolean  @default(false)
   Tweet      Tweet[]
+  Token      Token[]
 }
 
 model Tweet {
@@ -34,3 +34,23 @@ model Tweet {
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
 }
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  emailToken String? @unique
+  type       String
+
+  valid      Boolean  @default(true)
+  expiration DateTime
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+// enum TokenType {
+//   EMAIL
+//   PASSWORD
+// }
